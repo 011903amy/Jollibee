@@ -1,7 +1,7 @@
 import { imgPath } from '@/componets/helpers/functions-general'
 import React from 'react'
 
-const SideNav = () => {
+const SideNav = ({setCategory}) => {
   const menu = [
     {
       img: "nav-value-meal.webp",
@@ -42,15 +42,21 @@ const SideNav = () => {
       title: "Desserts"
 
     }
+    
   ]
+  const handleGetCategory = (category) => {
+setCategory(category)
+    }
   return (
     
   <>
   <h5 className='mb-0 text-center pt-2 text-sm'>Menu</h5>
     <ul>
 
-      {menu.map((item, key) => (<li className='mb-3'>
-        <button>
+      {menu.map((item, key) => (<li className='mb-3' key={key}>
+
+        <button onClick={() => handleGetCategory(item.title)}>
+          
           <img src={`${imgPath}/${item.img}`} alt="" />
           <small className='text-xs'>{item.title}</small>
         </button>
