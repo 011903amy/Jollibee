@@ -28,12 +28,12 @@ const Payment = ({setOption, handleProcessing, setShowCart}) => {
                 <p className="text-2xl mb-5 font-bold">
                   Select preferred payment option
                 </p>
-                <button className="bg-primary px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={handleProcessing} >
+                <button className="bg-myred px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={handleProcessing} >
                   <PhilippinePeso />
                   Counter Payment
                 </button>
                 <h3 className="my-3">or</h3>
-                <button className="bg-primary px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={handleProcessing} >
+                <button className="bg-myred px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={handleProcessing} >
                   <CreditCard /> Card / Online Payment
                 </button>
               </div>

@@ -5,6 +5,7 @@ export const menus = [
     menu_category: "Chicken Joy",
     menu_price: "200",
     menu_img: "chicken-1.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 2,
@@ -12,6 +13,7 @@ export const menus = [
     menu_category: "Chicken Joy",
     menu_price: "270",
     menu_img: "chicken-2.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 3,
@@ -19,6 +21,7 @@ export const menus = [
     menu_category: "Chicken Joy",
     menu_price: "470",
     menu_img: "chicken-3.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 4,
@@ -26,6 +29,7 @@ export const menus = [
     menu_category: "Chicken Joy",
     menu_price: "770",
     menu_img: "chicken-4.webp",
+    menu_is_active:true,
   },
   {
     menu_aid: 5,
@@ -33,6 +37,7 @@ export const menus = [
     menu_category: "Chicken Joy",
     menu_price: "370",
     menu_img: "chicken-5.webp",
+    menu_is_active:true,
   },
   {
     menu_aid: 6,
@@ -40,13 +45,15 @@ export const menus = [
     menu_category: "Chicken Joy",
     menu_price: "400",
     menu_img: "chicken-6.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 7,
-    menu_title: "Value Meal",
+    menu_title: "The Standard Value Meal",
     menu_category: "Value Meal",
     menu_price: "270",
     menu_img: "value-meal-1.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 8,
@@ -54,6 +61,7 @@ export const menus = [
     menu_category: "Value Meal",
     menu_price: "270",
     menu_img: "value-meal-2.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 27,
@@ -61,6 +69,7 @@ export const menus = [
     menu_category: "Value Meal",
     menu_price: "270",
     menu_img: "value-meal-3.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 28,
@@ -68,6 +77,7 @@ export const menus = [
     menu_category: "Value Meal",
     menu_price: "270",
     menu_img: "value-meal-4.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 29,
@@ -75,6 +85,7 @@ export const menus = [
     menu_category: "Value Meal",
     menu_price: "270",
     menu_img: "value-meal-5.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 9,
@@ -82,6 +93,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "69",
     menu_img: "burger-1.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 10,
@@ -89,6 +101,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "100",
     menu_img: "burger-2.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 22,
@@ -96,6 +109,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "80",
     menu_img: "burger-3.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 23,
@@ -103,6 +117,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "110",
     menu_img: "burger-4.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 24,
@@ -110,6 +125,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "140",
     menu_img: "burger-5.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 25,
@@ -117,6 +133,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "160",
     menu_img: "burger-6.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 26,
@@ -124,6 +141,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "180",
     menu_img: "burger-7.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 27,
@@ -131,6 +149,7 @@ export const menus = [
     menu_category: "Burger",
     menu_price: "180",
     menu_img: "burger-8.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 11,
@@ -138,6 +157,7 @@ export const menus = [
     menu_category: "Desserts",
     menu_price: "69",
     menu_img: "dessert-1.webp",
+    menu_is_active: false,
   },
   {
     menu_aid: 12,
@@ -145,6 +165,7 @@ export const menus = [
     menu_category: "Desserts",
     menu_price: "69",
     menu_img: "dessert-2.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 13,
@@ -152,6 +173,7 @@ export const menus = [
     menu_category: "Desserts",
     menu_price: "69",
     menu_img: "dessert-3.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 34,
@@ -159,6 +181,7 @@ export const menus = [
     menu_category: "Desserts",
     menu_price: "69",
     menu_img: "dessert-4.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 35,
@@ -166,6 +189,7 @@ export const menus = [
     menu_category: "Desserts",
     menu_price: "69",
     menu_img: "dessert-4.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 14,
@@ -173,6 +197,7 @@ export const menus = [
     menu_category: "Palabok",
     menu_price: "200",
     menu_img: "palabok-1.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 15,
@@ -180,6 +205,7 @@ export const menus = [
     menu_category: "Palabok",
     menu_price: "220",
     menu_img: "palabok-2.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 35,
@@ -187,6 +213,7 @@ export const menus = [
     menu_category: "Palabok",
     menu_price: "320",
     menu_img: "palabok-3.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 36,
@@ -194,6 +221,7 @@ export const menus = [
     menu_category: "Palabok",
     menu_price: "550",
     menu_img: "palabok-3.webp",
+    menu_is_active: true,
   },
   {
     menu_aid: 16,
@@ -201,34 +229,39 @@ export const menus = [
     menu_category: "Spaghetti",
     menu_price: "98",
     menu_img: "spag-1.webp",
-  },
+    menu_is_active: true,
+ },
   {
     menu_aid: 17,
     menu_title: "Jolly Spaghetti w/ Chickenjoy",
     menu_category: "Spaghetti",
     menu_price: "120",
     menu_img: "spag-2.webp",
-  },
+    menu_is_active: true,
+ },
   {
     menu_aid: 37,
     menu_title: "Jolly Spaghetti Family Pan",
     menu_category: "Spaghetti",
     menu_price: "410",
     menu_img: "spag-3.webp",
-  },
+    menu_is_active: true,
+ },
   {
     menu_aid: 18,
     menu_title: "Burger Steak",
     menu_category: "Burger Steak",
     menu_price: "75",
     menu_img: "steak-1.webp",
-  },
+    menu_is_active: true, 
+   },
   {
     menu_aid: 19,
     menu_title: "6pcs Burger Steak",
     menu_category: "Burger Steak",
     menu_price: "240",
     menu_img: "steak-2.webp",
+    menu_is_active: true,  
   },
   {
     menu_aid: 30,
@@ -236,6 +269,7 @@ export const menus = [
     menu_category: "Burger Steak",
     menu_price: "240",
     menu_img: "steak-3.webp",
+    menu_is_active: true, 
   },
   {
     menu_aid: 20,
@@ -243,20 +277,23 @@ export const menus = [
     menu_category: "Sides",
     menu_price: "45",
     menu_img: "sides-1.webp",
-  },
+    menu_is_active: true, 
+   },
   {
     menu_aid: 21,
     menu_title: "Mashed Potato",
     menu_category: "Sides",
     menu_price: "55",
     menu_img: "sides-2.webp",
-  },
+    menu_is_active: true, 
+   },
   {
     menu_aid: 31,
     menu_title: "White Rice",
     menu_category: "Sides",
     menu_price: "30",
     menu_img: "sides-3.webp",
+    menu_is_active: true,  
   },
   {
     menu_aid: 32,
@@ -264,12 +301,14 @@ export const menus = [
     menu_category: "Sides",
     menu_price: "50",
     menu_img: "sides-4.webp",
-  },
+    menu_is_active: true, 
+   },
   {
     menu_aid: 33,
     menu_title: "Small Jolly Spaghetti",
     menu_category: "Sides",
     menu_price: "70",
     menu_img: "sides-5.webp",
-  },
+    menu_is_active: true, 
+   },
 ];

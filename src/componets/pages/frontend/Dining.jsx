@@ -28,11 +28,11 @@ const Dining = ({setOption, setShowCart}) => {
                 <p className="text-2xl mb-5 font-bold">
                   Select preferred dining option
                 </p>
-                <button className="bg-primary px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={() => setOption("payment")}>
+                <button className="bg-myred px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={() => setOption("payment")}>
                   <Utensils /> Dine In
                 </button>
                 <h3 className="my-3">or</h3>
-                <button className="bg-primary px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={() => setOption("payment")} >
+                <button className="bg-myred px-8 py-4 w-[250px] flex justify-center gap-2 font-bold text-white items-center rounded-md" onClick={() => setOption("payment")} >
                   <ShoppingBag /> Take Out
                 </button>
               </div>

@@ -12,7 +12,7 @@ const Welcome = () => {
 
 
       <div className='absolute w-full bottom-0 left-0'>
-        <div className='bg-primary text-white text-center'>
+        <div className='bg-myred text-white text-center'>
           <Link to="/order" className="text-4xl p-4 font-bold flex gap-5 justify-center items-center" ><Pointer size={30} className='rotate-[-30deg]' />Tap Here to Start</Link >
         </div>
 
@@ -27,8 +27,8 @@ const Welcome = () => {
 
 
 
-          <div className='pl-4 border-l-4 border-primary basis-[300px]'>
-            <h5 className='text-primary mb-1'>For other payments</h5>
+          <div className='pl-4 border-l-4 border-myred basis-[300px]'>
+            <h5 className='text-myred mb-1'>For other payments</h5>
             <p className='text-xs text-black opacity-60'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt soluta nulla voluptates illum provident ?</p>
           </div>
         </div>
