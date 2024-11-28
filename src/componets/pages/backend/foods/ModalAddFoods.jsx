@@ -1,10 +1,7 @@
 import React from "react";
-
 import { ImagePlusIcon, X } from "lucide-react";
 import { Form, Formik } from "formik";
-
 import * as Yup from "Yup";
-
 import { StoreContext } from "@/componets/store/StoreContext";
 import { setIsAdd } from "@/componets/store/StoreAction";
 import SpinnerButton from "../partials/spinners/SpinnerButton";
@@ -21,7 +18,7 @@ const ModalAddFoods = ({itemEdit}) => {
     dispatch(setIsAdd(false));
   };
 
-  console.log(itemEdit)
+  console.log(handleChangePhoto)
 
   const initVal = {
     menu_title: itemEdit ? itemEdit.menu_title : "",

@@ -14,7 +14,7 @@ const DashboardAccordion = ({title, filterby}) => {
                       <h6 className='mb-0'>{title}</h6>
                       <button><ChevronDown className={`transition-all ${isOpen ? "rotate-180" : ""}`}/></button>
                     </div>
-                    <div className={`accordion-body border border-line rounded-b-md border-t-0 overflow-hidden max-h-[600px] h-full transition-all duration-700 ${isOpen ? "max-h-[600px]" : "max-h-[0px]"}`}>
+                    <div className={`accordion-body border border-line rounded-b-md border-t-0 overflow-hidden  h-full transition-all duration-700 ${isOpen ? "max-h-[600px]" : "max-h-[0px]"}`}>
                      
 
                     <ul className="space-y-3 py-4 px-2">
