@@ -3,33 +3,79 @@ import { ImagePlusIcon, X } from "lucide-react";
 import { Form, Formik } from "formik";
 import * as Yup from "Yup";
 import { StoreContext } from "@/componets/store/StoreContext";
-import { setIsAdd } from "@/componets/store/StoreAction";
+import { setError, setIsAdd, setMessage, setSuccess } from "@/componets/store/StoreAction";
 import SpinnerButton from "../partials/spinners/SpinnerButton";
 import ModalWrapper from "../partials/modals/ModalWrapper";
 import {  InputPhotoUpload, InputSelect, InputText } from "@/componets/helpers/FormInputs";
 import useUploadPhoto from "@/componets/custom-hook/useUploadPhoto";
 import { imgPath } from "@/componets/helpers/functions-general";
+import useQueryData from "@/componets/custom-hook/useQueryData";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { queryData } from "@/componets/helpers/queryData";
 
 const ModalAddFoods = ({itemEdit}) => {
   const { dispatch, store } = React.useContext(StoreContext);
   const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto("");
+  const [value, setValue] = React.useState("");
 
   const handleClose = () => {
     dispatch(setIsAdd(false));
   };
 
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   console.log(handleChangePhoto)
 
+  const {
+    isFetching,
+    error,
+    data: categ,
+    status,
+  } = useQueryData(
+    `/v2/category`, //enpoint
+    "get", //method
+    "category" //key
+  );
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (values) =>
+      queryData(
+        itemEdit
+          ? `/v2/food/${itemEdit.food_aid}`
+          : "/v2/food",
+        itemEdit ? "PUT" : "POST",
+        values
+      ),
+    onSuccess: (data) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["food"] });
+
+      // show error box
+      if (!data.success) {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
+        dispatch(setSuccess(false));
+      } else {
+        console.log("Success");
+        dispatch(setIsAdd(false));
+        dispatch(setSuccess(true));
+        dispatch(setMessage("Successful!"));
+      }
+    },
+  });
   const initVal = {
-    menu_title: itemEdit ? itemEdit.menu_title : "",
-    menu_price:itemEdit ? itemEdit.menu_price : "",
-    menu_category: itemEdit ? itemEdit.menu_category : "",
+    food_title: itemEdit ? itemEdit.food_title : "",
+    food_image: itemEdit ? itemEdit.food_image : "",
+    food_price:itemEdit ? itemEdit.food_price : "",
+    food_category_id: itemEdit ? itemEdit.food_category_id : "",
     
   };
   const yupSchema = Yup.object({
-    menu_title: Yup.string().required("Required"),
-    menu_price: Yup.string().required("Required"),
-    menu_category: Yup.string().required("Required"),
+    food_title: Yup.string().required("Required"),
+    food_price: Yup.string().required("Required"),
+    food_category_id: Yup.string().required("Required"),
     
   });
 
@@ -48,7 +94,17 @@ const ModalAddFoods = ({itemEdit}) => {
             initialValues={initVal}
             validationSchema={yupSchema}
             onSubmit={async (values) => {
-              console.log(values);
+              mutation.mutate({
+                ...values,
+                food_image:
+                  (itemEdit?.food_image === "" && photo) ||
+                  (!photo && "") ||
+                  (photo === undefined && "") ||
+                  (photo && itemEdit?.food_image !== photo?.name)
+                    ? photo?.name || ""
+                    : itemEdit?.food_image || "",
+              });
+              uploadPhoto();
             }}
           >
             {(props) => {
@@ -60,9 +116,9 @@ const ModalAddFoods = ({itemEdit}) => {
                         
 
                       
-                      <div className="input-wrap relative  group input-photo-wrap h-[150px] ">
+                    <div className="input-wrap relative  group input-photo-wrap h-[150px] ">
                         <label htmlFor="">Photo</label>
-                        {itemEdit === null ? (
+                        {itemEdit === null && photo === null ? (
                           <div className="w-full border border-line rounded-md flex justify-center items-center flex-col h-full">
                             <ImagePlusIcon
                               size={50}
@@ -73,17 +129,20 @@ const ModalAddFoods = ({itemEdit}) => {
                               Upload Photo
                             </small>
                           </div>
-
                         ) : (
                           <img
-                            src={
-                              itemEdit === null
-                                ? URL.createObjectURL(photo) // preview
-                                : imgPath + "/" + itemEdit?.menu_img // check db
-                            }
-                            alt="employee photo"
-                            className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto `}
-                          />
+                          src={
+                            photo
+                              ? URL.createObjectURL(photo) // preview
+                              : imgPath + "/" + itemEdit?.food_image // check db
+                          }
+                          alt="category photo"
+                          className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
+                            mutation.isPending
+                              ? "opacity-40 pointer-events-none"
+                              : ""
+                          }`}
+                        />
                         )}
                         <InputPhotoUpload
                           name="photo"
@@ -93,38 +152,37 @@ const ModalAddFoods = ({itemEdit}) => {
                           title="Upload photo"
                           onChange={(e) => handleChangePhoto(e)}
                           onDrop={(e) => handleChangePhoto(e)}
-                          className={`opacity-0 absolute top-0 right-0 bottom-0 left-0 rounded-full  m-auto cursor-pointer w-full h-full 
-                          }`}
+                          className={`opacity-0 absolute top-0 right-0 bottom-0 left-0 rounded-full m-auto cursor-pointer w-full h-full`}
                         />
                       </div>
                      
-                   <div className="input-wrap mt-8">
+                   <div className="input-wrap mt-8" onChange={handleChange}>
                         <InputText
                           label="Title"
                           type="text"
-                          name="menu_title"
+                          name="food_title"
                         />
                       </div>
-                        <div className="input-wrap">
+                        <div className="input-wrap" onChange={handleChange}>
                         <InputText
                           label="Price"
                           type="text"
-                          name="menu_price"
+                          name="food_price"
                         />
                       </div>
                       <div className="input-wrap">
-                        <InputSelect label="Category" name="menu_category">
-                          <option value="" hidden>
-                            Select Category
-                          </option>
-                          <option value="Value Meal">Value Meal</option>
-                          <option value="Chicken Joy">Chicken Joy</option>
-                          <option value="Burger">Burger</option>
-                          <option value="Spaghetti">Spaghetti</option>
-                          <option value="Burger">Burger Steak</option>
-                          <option value="Palabok">Palabok</option>
-                          <option value="Sides">Sides</option>
-                          <option value="Desserts">Desserts</option>
+                        <InputSelect label="Food Category" name="food_category_id"  onChange={handleChange}>
+                        <option value="hidden"></option>
+                        {categ?.data.map((item, key) => {
+                          return(
+                            <>
+                            {item.category_is_active === 1 && (
+                              <option value={item.category_aid} key={key}>{item.category_title}</option>
+                            )}
+                            </>
+                          )
+                        })}
+                          
                         </InputSelect>
                       </div>
                     </div>

@@ -1,9 +1,10 @@
+import { setSuccess } from "@/componets/store/StoreAction";
 import { StoreContext } from "@/componets/store/StoreContext";
 import { CheckCircle } from "lucide-react";
 import React from "react";
 
 const ToastSuccess = () => {
-  const { dispatch } = React.useContext(StoreContext);
+  const { store, dispatch } = React.useContext(StoreContext);
   React.useEffect(() => {
     setTimeout(() => {
       dispatch(setSuccess(false));

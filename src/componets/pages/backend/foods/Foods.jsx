@@ -42,7 +42,7 @@ const Foods= () => {
           </main>
         </div>
       </section>
-      {store.isAdd && <ModalAddFoods itemEdit={itemEdit} />}
+      {store.isAdd && <ModalAddFoods setIsAdd={setIsAdd} itemEdit={itemEdit} setItemEdit={setItemEdit} />}
       {store.isValidate && <ModalValidation />}
       {store.error && <ModalError />}
       {store.isSuccess && <ToastSuccess />}

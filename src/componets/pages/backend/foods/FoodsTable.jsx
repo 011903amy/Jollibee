@@ -11,31 +11,49 @@ import Pills from "../partials/Pills";
 import ModalConfirm from "../partials/modals/ModalConfirm";
 import ModalDelete from "../partials/modals/ModalDelete";
 import React from "react";
-import { setIsAdd, setIsConfirm, setIsDelete } from "@/componets/store/StoreAction";
+import { setIsAdd, setIsArchive, setIsConfirm, setIsDelete, setIsRestore } from "@/componets/store/StoreAction";
 import { StoreContext } from "@/componets/store/StoreContext";
 import { menus } from "../menu-data";
+import useQueryData from "@/componets/custom-hook/useQueryData";
+import Status from "@/componets/partials/Status";
+import ModalArchive from "@/componets/partials/modal/ModalArchive";
+import ModalRestore from "@/componets/partials/modal/ModalRestore";
 
 const FoodsTable = ({setItemEdit}) => {
   const { store, dispatch } = React.useContext(StoreContext);
+  const [id, setIsId] =React. useState("")
   let counter = 1;
   
 
-  const handleDelete = () => {
+  const handleDelete = (item) => {
     dispatch(setIsDelete(true));
+    setIsId(item.food_aid)
   };
-  const handleRestore = () => {
-    dispatch(setIsConfirm(true));
+  const handleRestore = (item) => {
+    dispatch(setIsRestore(true));
+    setIsId(item.food_aid)
   };
-  const handleArchive = () => {
-    dispatch(setIsConfirm(true));
+  const handleArchive = (item) => {
+    dispatch(setIsArchive(true));
+    setIsId(item.food_aid)
   };
+
  
   const handleEdit = (item) => {
     dispatch(setIsAdd(true));
     setItemEdit(item);
   };
 
-
+  const {
+    isFetching,
+    error,
+    data: result,
+    status,
+  } = useQueryData(
+    `/v2/food`, //enpoint
+    "get", //method
+    "food" //key
+  );
 
   return (
     <div>
@@ -69,18 +87,22 @@ const FoodsTable = ({setItemEdit}) => {
             </td>
           </tr> */}
 
-          {menus.map((item,key)=>(
+          {result?.count > 0 && result.data.map((item, key) => (
                 <tr key={key}>
                   <td>{counter++}.</td>
                   <td>
-                    <Pills />
+                    {item.food_is_active === 1 ? (
+                      <Status text="Active" />
+                    ) : (
+                      <Status text="Inactive" />
+                    )}
                   </td>
-                  <td>{item.menu_title}</td>
-                  <td>{item.menu_price}</td>
-                  <td>{item.menu_category}</td>
+                  <td>{item.food_title}</td>
+                  <td>{item.food_price}</td>
+                  <td>{item.category_title}</td>
                   <td>
                     <ul className="table-action">
-                      {true ? (
+                      {item.food_is_active ? (
                         <>
                           <li>
                             <button
@@ -95,7 +117,7 @@ const FoodsTable = ({setItemEdit}) => {
                             <button
                               className="tooltip"
                               data-tooltip="Archive"
-                              onClick={() => handleArchive()}
+                              onClick={() => handleArchive(item)}
                             >
                               <Archive />
                             </button>
@@ -107,7 +129,7 @@ const FoodsTable = ({setItemEdit}) => {
                             <button
                               className="tooltip"
                               data-tooltip="Restore"
-                              onClick={() => handleRestore()}
+                              onClick={() => handleRestore(item)}
                             >
                               <ArchiveRestore />
                             </button>
@@ -116,7 +138,7 @@ const FoodsTable = ({setItemEdit}) => {
                             <button
                               className="tooltip"
                               data-tooltip="Delete"
-                              onClick={() => handleDelete()}
+                              onClick={() => handleDelete(item)}
                             >
                               <Trash2 />
                             </button>
@@ -133,8 +155,10 @@ const FoodsTable = ({setItemEdit}) => {
           <LoadMore />
         </div>
       </div>
-      {store.isDelete && <ModalDelete />}
+      {store.isDelete && (<ModalDelete setIsDelete={setIsDelete} mysqlApiDelete={`/v2/food/${id}`} queryKey={"food"} />)}
       {store.isConfirm && <ModalConfirm />}
+      {store.isArchive && (<ModalArchive setIsArchive={setIsArchive} mysqlEndpoint={`/v2/food/active/${id}`} queryKey={"food"}/>)}
+        {store.isRestore && (<ModalRestore setIsRestore={setIsRestore} mysqlEndpoint={`/v2/food/active/${id}`} queryKey={"food"}/>)}
       
     </div>
   );
