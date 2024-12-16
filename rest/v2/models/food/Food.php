@@ -53,6 +53,27 @@ class Food
         return $query;
       }
 
+  public function readAllByCategory()
+  {
+    try {
+      $sql = "select * ";
+      $sql .= "from ";
+      $sql .= "{$this->tblCategory} as usersCategory, ";
+      $sql .= "{$this->tblFood} as usersFood ";
+      $sql .= "where usersCategory.category_aid = usersFood.food_category_id ";
+      $sql .= "and usersCategory.category_aid = :food_category_id ";
+      $sql .= "order by usersFood.food_is_active desc, ";
+      $sql .= "usersFood.food_aid asc ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "food_category_id" => $this->food_category_id,
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+
       public function readLimit()
       {
         try {

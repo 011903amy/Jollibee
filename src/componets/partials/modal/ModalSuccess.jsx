@@ -33,7 +33,7 @@ const ModalSuccess = () => {
   return (
     <>
       <div
-        className={`drop-shadow-2xl fixed z-[99] top-10 left-1/2 -translate-x-1/2 flex items-center justify-between w-full gap-2 max-w-sm p-4 mb-4 text-dark bg-white rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] transform duration-200 ease-in-out ${animate}`}
+        className={`drop-shadow-2xl fixed z-[99] top-10 left-1/2 -translate-x-1/2 flex items-center justify-between w-full gap-2 max-w-sm p-4 mb-4 text-black bg-white rounded-lg shadow-[0_3px_10px_rgb(0,0,0,0.2)] transform duration-200 ease-in-out ${animate}`}
       >
         <div className="flex items-center gap-3">
           <div className="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">

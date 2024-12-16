@@ -5,6 +5,7 @@ import React from "react";
 import { FaArchive } from "react-icons/fa";
 import { GrFormClose } from "react-icons/gr";
 import { queryData } from "@/componets/helpers/queryData";
+import { setError, setIsAdd, setMessage, setSuccess } from "@/componets/store/StoreAction";
 
 const ModalArchive = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -22,10 +23,14 @@ const ModalArchive = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
       // dispatch(setIsDelete(false));
 
       if (!data.success) {
-        console.log("May error!");
+                dispatch(setError(true));
+               dispatch(setMessage(data.error));
+               dispatch(setSuccess(false));
       } else {
         dispatch(setIsArchive(false));
-        console.log("Naysuu!");
+       dispatch(setIsAdd(false));
+               dispatch(setSuccess(true));
+               dispatch(setMessage("Successful!"));
       }
     },
   });

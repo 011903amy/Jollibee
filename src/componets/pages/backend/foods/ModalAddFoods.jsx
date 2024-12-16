@@ -112,11 +112,7 @@ const ModalAddFoods = ({itemEdit}) => {
                 <Form>
                   <div className="modal-form h-full max-h-[calc(100vh-56px)] grid grid-rows-[1fr_auto]">
                     <div className="form-wrapper p-4 max-h-[80vh] h-full overflow-y-auto custom-scroll">
-
-                        
-
-                      
-                    <div className="input-wrap relative  group input-photo-wrap h-[150px] ">
+                      <div className="input-wrap relative  group input-photo-wrap h-[150px] ">
                         <label htmlFor="">Photo</label>
                         {itemEdit === null && photo === null ? (
                           <div className="w-full border border-line rounded-md flex justify-center items-center flex-col h-full">
@@ -131,18 +127,18 @@ const ModalAddFoods = ({itemEdit}) => {
                           </div>
                         ) : (
                           <img
-                          src={
-                            photo
-                              ? URL.createObjectURL(photo) // preview
-                              : imgPath + "/" + itemEdit?.food_image // check db
-                          }
-                          alt="category photo"
-                          className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
-                            mutation.isPending
-                              ? "opacity-40 pointer-events-none"
-                              : ""
-                          }`}
-                        />
+                            src={
+                              photo
+                                ? URL.createObjectURL(photo) // preview
+                                : imgPath + "/" + itemEdit?.food_image // check db
+                            }
+                            alt="category photo"
+                            className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
+                              mutation.isPending
+                                ? "opacity-40 pointer-events-none"
+                                : ""
+                            }`}
+                          />
                         )}
                         <InputPhotoUpload
                           name="photo"
@@ -155,15 +151,15 @@ const ModalAddFoods = ({itemEdit}) => {
                           className={`opacity-0 absolute top-0 right-0 bottom-0 left-0 rounded-full m-auto cursor-pointer w-full h-full`}
                         />
                       </div>
-                     
-                   <div className="input-wrap mt-8" onChange={handleChange}>
+
+                      <div className="input-wrap mt-8" onChange={handleChange}>
                         <InputText
                           label="Title"
                           type="text"
                           name="food_title"
                         />
                       </div>
-                        <div className="input-wrap" onChange={handleChange}>
+                      <div className="input-wrap" onChange={handleChange}>
                         <InputText
                           label="Price"
                           type="text"
@@ -171,25 +167,30 @@ const ModalAddFoods = ({itemEdit}) => {
                         />
                       </div>
                       <div className="input-wrap">
-                        <InputSelect label="Food Category" name="food_category_id"  onChange={handleChange}>
-                        <option value="hidden"></option>
-                        {categ?.data.map((item, key) => {
-                          return(
-                            <>
-                            {item.category_is_active === 1 && (
-                              <option value={item.category_aid} key={key}>{item.category_title}</option>
-                            )}
-                            </>
-                          )
-                        })}
-                          
+                        <InputSelect
+                          label="Food Category"
+                          name="food_category_id"
+                          onChange={handleChange}
+                        >
+                          <option value="hidden"></option>
+                          {categ?.data.map((item, key) => {
+                            return (
+                              <>
+                                {item.category_is_active === 1 && (
+                                  <option value={item.category_aid} key={key}>
+                                    {item.category_title}
+                                  </option>
+                                )}
+                              </>
+                            );
+                          })}
                         </InputSelect>
                       </div>
                     </div>
                     <div className="form-action flex p-4 justify-end gap-3">
                       <button className="btn btn-add" type="submit">
-                        <SpinnerButton />
-                        Save
+                        {mutation.isPending && <SpinnerButton />}
+                        {itemEdit ? "Save" : "Add"}
                       </button>
                       <button
                         className="btn btn-cancel"

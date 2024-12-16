@@ -6,7 +6,7 @@ import ButtonSpinner from "../spinner/ButtonSpinner";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { StoreContext } from "@/componets/store/StoreContext";
-import { setIsRestore } from "@/componets/store/StoreAction";
+import { setError, setIsDelete, setIsRestore, setMessage, setSuccess } from "@/componets/store/StoreAction";
 import { queryData } from "@/componets/helpers/queryData";
 
 
@@ -27,10 +27,14 @@ const ModalRestore = ({ setIsArchive, mysqlEndpoint, queryKey, item }) => {
       // dispatch(setIsDelete(false));
 
       if (!data.success) {
-        console.log("May error!");
-      } else {
+        dispatch(setError(true));
+        dispatch(setMessage(data.error));
         dispatch(setIsRestore(false));
-        console.log("Naysuu!");
+      } else {
+        
+        dispatch(setIsRestore(false));
+         dispatch(setSuccess(true));
+         dispatch(setMessage("Restore!"));
       }
     },
   });

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Processing from './Processing';
 import Payment from './Payment';
 import Dining from './Dining';
+import useQueryData from '@/componets/custom-hook/useQueryData';
 
 const ModalCart = ({setShowCart, cartData, setCartData ,getTotal}) => {
   
@@ -13,11 +14,11 @@ const ModalCart = ({setShowCart, cartData, setCartData ,getTotal}) => {
   const navigate = useNavigate();
   
   const handleAdd = (item) => {
-    const exist = cartData.find((data) => data.menu_aid === item.menu_aid);
+    const exist = cartData.find((data) => data.food_aid === item.food_aid);
     if (exist !== undefined) {
       setCartData(
         cartData.map((cart) =>
-          cart.menu_aid === item.menu_aid
+          cart.food_aid === item.food_aid
             ? { ...exist, quantity: exist.quantity + 1 }
             : cart
         )
@@ -27,13 +28,13 @@ const ModalCart = ({setShowCart, cartData, setCartData ,getTotal}) => {
     }
   };
   const handleRemove = (item) => {
-    const exist = cartData.find((cart) => cart.menu_aid === item.menu_aid);
+    const exist = cartData.find((cart) => cart.food_aid === item.food_aid);
     if (exist.quantity === 1) {
-      setCartData(cartData.filter((cart) => cart.menu_aid !== item.menu_aid));
+      setCartData(cartData.filter((cart) => cart.food_aid !== item.food_aid));
     } else {
       setCartData(
         cartData.map((cart) =>
-          cart.menu_aid === item.menu_aid
+          cart.food_aid === item.food_aid
             ? { ...exist, quantity: exist.quantity - 1 }
             : cart
         )
@@ -49,7 +50,17 @@ const ModalCart = ({setShowCart, cartData, setCartData ,getTotal}) => {
         navigate("/");
     },1000)
   }
-  
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: result,
+    status,
+  } = useQueryData(
+    `/v2/food`, //enpoint
+    "get", //method
+    "food" //key
+  );
   
   return (
     <div className='fixed top-0 left-0 w-full h-screen'>
@@ -85,14 +96,14 @@ const ModalCart = ({setShowCart, cartData, setCartData ,getTotal}) => {
                       key={key}
                     >
                       <img
-                        src={`${imgPath}/${item.menu_img}`}
+                        src={`${imgPath}/${item.food_image}`}
                         alt=""
                         className="w-[100px] mx-auto"
                       />
                       <p className="font-bold mb-1 text-sm line-clamp-1">
-                        {item.menu_title}
+                        {item.food_title}
                       </p>
-                      <h5>P {item.menu_price}</h5>
+                      <h5>P {item.food_price}</h5>
                       <ul className="flex items-center gap-3 justify-center">
                         <li>
                           <button

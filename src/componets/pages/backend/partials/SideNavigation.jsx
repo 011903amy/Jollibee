@@ -1,6 +1,7 @@
 
 import { imgPath } from '@/componets/helpers/functions-general'
 import { LayoutDashboard, Megaphone, MousePointerClick, UtensilsCrossed } from 'lucide-react'
+import { FaCog } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 
 const SideNavigation = ({menu}) => {
@@ -24,6 +25,11 @@ const SideNavigation = ({menu}) => {
       title:"Category",
       slug: "/admin/category",
       icon:<MousePointerClick size={16}/>
+    },
+    {
+      title:"Settings",
+      slug: "/admin/settings",
+      icon:<FaCog size={16}/>
     },
 
   ]

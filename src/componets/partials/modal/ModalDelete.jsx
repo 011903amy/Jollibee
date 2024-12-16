@@ -1,16 +1,16 @@
-import { queryData } from "@/components/helpers/queryData";
-import { setIsDelete } from "@/store/storeAction";
-import { StoreContext } from "@/store/storeContext";
+
+import { setError, setMessage, setSuccess } from "@/componets/store/StoreAction";
+
 import {
   useMutation,
-  useMutationState,
-  useQueryClient,
+  useQueryClient
 } from "@tanstack/react-query";
 import React from "react";
-import { FaDeleteLeft } from "react-icons/fa6";
 import { GrFormClose } from "react-icons/gr";
-import ButtonSpinner from "../spinner/ButtonSpinner";
 import { MdDelete } from "react-icons/md";
+import ButtonSpinner from "../spinner/ButtonSpinner";
+import { queryData } from "@/componets/helpers/queryData";
+import { StoreContext } from "@/componets/store/StoreContext";
 
 const ModalDelete = ({ setIsDelete, mysqlApiDelete, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -28,12 +28,13 @@ const ModalDelete = ({ setIsDelete, mysqlApiDelete, queryKey, item }) => {
       if (!data.success) {
         dispatch(setError(true));
         dispatch(setMessage(data.error));
-        console.log("May error!");
+         dispatch(setIsDelete(false));
+        
       } else {
-        setIsDelete(false);
-        console.log("Naysuu!");
+       
         dispatch(setSuccess(true));
-        dispatch(setMessage(successMsg));
+        dispatch(setIsDelete(false));
+        dispatch(setMessage("Delete!"));
       }
     },
   });

@@ -1,23 +1,20 @@
+import { Archive, ArchiveRestore, FilePenLine, Trash2 } from "lucide-react";
 
-import {
-  Archive,
-  ArchiveRestore,
-  FilePenLine,
-  Trash2,
-} from "lucide-react";
-
-import LoadMore from "../partials/LoadMore";
+import LoadMore from "../LoadMore";
 import Pills from "../partials/Pills";
 import ModalConfirm from "../partials/modals/ModalConfirm";
 import ModalDelete from "../partials/modals/ModalDelete";
 import React from "react";
-import { setIsAdd, setIsConfirm, setIsDelete } from "@/componets/store/StoreAction";
+import {
+  setIsAdd,
+  setIsConfirm,
+  setIsDelete,
+} from "@/componets/store/StoreAction";
 import { StoreContext } from "@/componets/store/StoreContext";
 
 const AdverstisementTable = () => {
   const { store, dispatch } = React.useContext(StoreContext);
   let counter = 1;
-  
 
   const handleDelete = () => {
     dispatch(setIsDelete(true));
@@ -28,12 +25,10 @@ const AdverstisementTable = () => {
   const handleArchive = () => {
     dispatch(setIsConfirm(true));
   };
- 
+
   const handleEdit = () => {
     dispatch(setIsAdd(true));
   };
-
-
 
   return (
     <div>
@@ -48,7 +43,7 @@ const AdverstisementTable = () => {
                 <th>#</th>
                 <th>Status</th>
                 <th>Title</th>
-                
+
                 <th></th>
               </tr>
             </thead>
@@ -64,7 +59,7 @@ const AdverstisementTable = () => {
             </td>
           </tr> */}
 
-             {Array.from(Array(6).keys()).map((i) => (
+              {Array.from(Array(6).keys()).map((i) => (
                 <tr key={i}>
                   <td>{counter++}.</td>
                   <td>
@@ -119,7 +114,7 @@ const AdverstisementTable = () => {
                     </ul>
                   </td>
                 </tr>
-           ))}
+              ))}
             </tbody>
           </table>
 

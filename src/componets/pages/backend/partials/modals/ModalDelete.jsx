@@ -1,14 +1,10 @@
-
-import {
-  useMutation,
-  useQueryClient
-} from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash } from "lucide-react";
 import React from "react";
 import { GrFormClose } from "react-icons/gr";
 import SpinnerButton from "../spinners/SpinnerButton";
-import { queryData } from "@/componets/helpers/queryData";
 import { StoreContext } from "@/componets/store/StoreContext";
+import { queryData } from "@/componets/helpers/queryData";
 
 const ModalDelete = ({ setIsDelete, mysqlApiDelete, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
