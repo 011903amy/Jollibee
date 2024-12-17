@@ -11,6 +11,11 @@ import {
   setIsDelete,
 } from "@/componets/store/StoreAction";
 import { StoreContext } from "@/componets/store/StoreContext";
+import FetchingSpinner from "@/componets/partials/spinner/FetchingSpinner";
+import TableLoader from "../partials/TableLoader";
+import IconNoData from "../partials/IconNoData";
+import IconServerError from "../partials/IconServerError";
+import useQueryData from "@/componets/custom-hook/useQueryData";
 
 const AdverstisementTable = () => {
   const { store, dispatch } = React.useContext(StoreContext);
@@ -29,12 +34,24 @@ const AdverstisementTable = () => {
   const handleEdit = () => {
     dispatch(setIsAdd(true));
   };
+  //  const {
+  //    isLoading,
+  //    isFetching,
+  //    error,
+  //    data: result,
+  //    status,
+  //  } = useQueryData(
+  //    `/v2/advertisement`, //enpoint
+  //    "get", //method
+  //    "advertisement" //key
+  //  );
+
 
   return (
     <div>
       {" "}
       <div className="relative p-4 bg-secondary rounded-md mt-10 border border-line">
-        {/* <SpinnerTable /> */}
+        {/* {isFetching && !isLoading && <FetchingSpinner />} */}
         <div className="table-wrapper custom-scroll">
           {/* <TableLoader count={20} cols={4}/> */}
           <table>
@@ -48,16 +65,28 @@ const AdverstisementTable = () => {
               </tr>
             </thead>
             <tbody>
-              {/* <tr>
-            <td colSpan={100}>
-              <IconNoData/>
-            </td>
-          </tr> */}
-              {/* <tr>
-            <td colSpan={100}>
-              <IconServerError/>
-            </td>
-          </tr> */}
+              {/* {isLoading && (
+                <tr>
+                  <td colSpan="100%">
+                    <TableLoader count={20} cols={5} />
+                  </td>
+                </tr>
+              )}
+
+              {result?.count === 0 && (
+                <tr>
+                  <td colSpan={100}>
+                    <IconNoData />
+                  </td>
+                </tr>
+              )}
+              {error && (
+                <tr>
+                  <td colSpan={100}>
+                    <IconServerError />
+                  </td>
+                </tr>
+              )} */}
 
               {Array.from(Array(6).keys()).map((i) => (
                 <tr key={i}>

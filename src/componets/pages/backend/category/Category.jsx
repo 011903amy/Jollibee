@@ -31,8 +31,8 @@ const Category = () => {
             <Header title="Category" subtitle="Manage Kiosk Advertisement" />
             <div className="p-8">
               <div className="flex justify-between items-center">
-                <SearchBar />
-                <button className="btn btn-add" type="reset" onClick={handleAdd}>
+                <div></div>
+                <button className="btn btn-add mb-5" type="reset" onClick={handleAdd}>
                   <Plus size={16} />
                   Add New
                 </button>

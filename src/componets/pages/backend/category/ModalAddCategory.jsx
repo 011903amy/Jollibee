@@ -20,7 +20,7 @@ import { queryData } from "@/componets/helpers/queryData";
 import useQueryData from "@/componets/custom-hook/useQueryData";
 import { imgPath } from "@/componets/helpers/functions-general";
 
-const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit }) => {
+const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit, itemEdit }) => {
   const { dispatch, store } = React.useContext(StoreContext);
   const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto("");
   
@@ -116,7 +116,6 @@ const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit }) => {
                 <Form>
                   <div className="modal-form h-full max-h-[calc(100vh-56px)] grid grid-rows-[1fr_auto]">
                     <div className="form-wrapper p-4 max-h-[80vh] h-full overflow-y-auto custom-scroll">
-                    
                       <div className="input-wrap">
                         <InputText
                           label="Title"
@@ -141,18 +140,18 @@ const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit }) => {
                           </div>
                         ) : (
                           <img
-                          src={
-                            photo
-                              ? URL.createObjectURL(photo) // preview
-                              : imgPath + "/" + isCategoryEdit?.category_image // check db
-                          }
-                          alt="category photo"
-                          className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
-                            mutation.isPending
-                              ? "opacity-40 pointer-events-none"
-                              : ""
-                          }`}
-                        />
+                            src={
+                              photo
+                                ? URL.createObjectURL(photo) // preview
+                                : imgPath + "/" + isCategoryEdit?.category_image // check db
+                            }
+                            alt="category photo"
+                            className={`group-hover:opacity-30 duration-200 relative object-cover h-full w-full  m-auto ${
+                              mutation.isPending
+                                ? "opacity-40 pointer-events-none"
+                                : ""
+                            }`}
+                          />
                         )}
                         <InputPhotoUpload
                           name="photo"
@@ -168,13 +167,12 @@ const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit }) => {
                     </div>
                     <div className="form-action flex p-4 justify-end gap-3">
                       <button className="btn btn-add" type="submit">
-                        <SpinnerButton />
-                        Save
+                        {mutation.isPending && <SpinnerButton />}
+                        {itemEdit ? "Save" : "Add"}
                       </button>
                       <button
                         className="btn btn-cancel"
                         type="reset"
-                        
                         onClick={handleClose}
                       >
                         Cancel

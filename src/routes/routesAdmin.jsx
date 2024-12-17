@@ -23,7 +23,7 @@ export const routeAdmin = [
     element: <Category />,
   },
   {
-    route: `/admin/food`,
+    route: `/admin/foods`,
     element: <Foods />,
   },
   {

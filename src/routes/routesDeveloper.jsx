@@ -21,7 +21,7 @@ export const routeDeveloper = [
     element: <Category />,
   },
   {
-    route: `/admin/food`,
+    route: `/admin/foods`,
     element: <Foods />,
   },
   {

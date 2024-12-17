@@ -29,7 +29,7 @@ class Category
         try {
           $sql = "select * from {$this->tblCategory} ";
           $sql .= "order by category_is_active desc, ";
-          $sql .= "category_aid asc ";
+          $sql .= "category_title ";
           $query = $this->connection->query($sql);
         } catch (PDOException $ex) {
           $query = false;
@@ -42,7 +42,7 @@ class Category
         try {
           $sql = "select * from {$this->tblCategory} ";
           $sql .= "order by category_is_active desc, ";
-          $sql .= "category_aid asc ";
+          $sql .= "category_title ";
           $sql .= "limit :start, ";
           $sql .= ":total ";
           $query = $this->connection->prepare($sql);
@@ -55,6 +55,60 @@ class Category
       }
       return $query;
   }
+  public function search()
+  {
+    try {
+      $sql = "select * from {$this->tblCategory} ";
+      $sql .= "where category_title like :category_title ";
+      $sql .= "order by category_is_active desc, ";
+      $sql .= "category_title ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "category_title" => "%{$this->category_search}%",
+       
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+
+  public function filterActive()
+  {
+    try {
+      $sql = "select * from {$this->tblCategory} ";
+      $sql .= "where category_is_active = :category_is_active ";
+      $sql .= "order by category_is_active desc, ";
+      $sql .= "category_title ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "category_is_active" => $this->category_is_active,       
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+
+  public function filterActiveSearch()
+  {
+    try {
+      $sql = "select * from {$this->tblCategory} ";
+      $sql .= "where category_is_active = :category_is_active ";
+      $sql .= "and category_title like :category_title ";
+      $sql .= "order by category_is_active desc, ";
+      $sql .= "category_title ";
+      $query = $this->connection->prepare($sql);
+      $query->execute([
+        "category_is_active" => $this->category_is_active,
+        "category_title" => "%{$this->category_search}%",
+      ]);
+    } catch (PDOException $ex) {
+      $query = false;
+    }
+    return $query;
+  }
+
       public function readById()
       {
           try {
@@ -100,20 +154,20 @@ class Category
     return $query;
   }
 
-  public function checkName()
-  {
-    try {
-      $sql = "select category_title from {$this->tblCategory} ";
-      $sql .= "where category_title = :category_title ";
-      $query = $this->connection->prepare($sql);
-      $query->execute([
-        "category_title" => "{$this->category_title}",
-      ]);
-    } catch (PDOException $ex) {
-      $query = false;
-    }
-    return $query;
-  }
+  // public function checkName()
+  // {
+  //   try {
+  //     $sql = "select category_title from {$this->tblCategory} ";
+  //     $sql .= "where category_title = :category_title ";
+  //     $query = $this->connection->prepare($sql);
+  //     $query->execute([
+  //       "category_title" => "{$this->category_title}",
+  //     ]);
+  //   } catch (PDOException $ex) {
+  //     $query = false;
+  //   }
+  //   return $query;
+  // }
 
   public function update()
   {
