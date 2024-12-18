@@ -65,7 +65,6 @@ class Category
       $query = $this->connection->prepare($sql);
       $query->execute([
         "category_title" => "%{$this->category_search}%",
-       
       ]);
     } catch (PDOException $ex) {
       $query = false;

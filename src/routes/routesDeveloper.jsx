@@ -1,3 +1,4 @@
+import Advertisement from "@/componets/pages/backend/advertisement/Adevertisement";
 import Adevertisement from "@/componets/pages/backend/advertisement/Adevertisement";
 import Category from "@/componets/pages/backend/category/Category";
 import Dashboard from "@/componets/pages/backend/dashboard/Dashboard";
@@ -13,7 +14,7 @@ export const routeDeveloper = [
   },
   {
     route: `/admin/advertisement`,
-    element: <Adevertisement />,
+    element: <Advertisement />,
   },
 
   {

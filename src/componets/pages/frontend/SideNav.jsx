@@ -17,12 +17,13 @@ const SideNav = ({ setCategoryId, isLoading, isFetching, result }) => {
         {isFetching && !isLoading && <FetchingSpinner />}
         {isLoading && <TableLoader cols={1} count={18} />}
 
-        {
+        {!isLoading && (
           <button type="button" onClick={() => handleClickCategory({category_aid: ""})} className="w-full mx-auto">
             <img src={`${imgPath}/jollibee-logo.png`} alt="" className="w-16 mx-auto py-2" />
             <small className="text-xs">All</small>
           </button>
-        }
+        )}
+        
         {result?.count > 0 &&
           result.data.map((item, key) => (
             <li className="mb-3" key={key}>

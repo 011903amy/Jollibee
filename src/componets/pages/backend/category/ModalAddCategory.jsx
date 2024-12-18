@@ -1,8 +1,6 @@
 import React from "react";
-
 import { ImagePlusIcon, X } from "lucide-react";
 import { Form, Formik } from "formik";
-
 import * as Yup from "Yup";
 import {
   setError,
@@ -23,7 +21,6 @@ import { imgPath } from "@/componets/helpers/functions-general";
 const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit, itemEdit }) => {
   const { dispatch, store } = React.useContext(StoreContext);
   const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto("");
-  
   const [value, setValue] = React.useState("");
 
   const handleClose = () => {

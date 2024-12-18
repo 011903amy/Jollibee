@@ -26,14 +26,14 @@ const LoadMore = ({
             className="loadmore h-full relative my-8 text-primary p-1.5 rounded-full w-36 disabled:opacity-50 disabled:cursor-not-allowed"
           ></button>
         ) : (
-          <div className="loadmore my-8 p-1.5 text-center">End of List</div>
+          <div className="loadmore my-2 p-1.5 text-center">End of List</div>
         )}
       </>
     );
   }
 
   if (!hasNextPage && result?.count > 0 && !isSearchFilter) {
-    return <div className="my-6 p-1.5"> End of List</div>;
+    return <div className="my-2 p-1.5"> End of List</div>;
   }
 
   if (hasNextPage) {

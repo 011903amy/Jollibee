@@ -26,10 +26,10 @@ const Foods= () => {
           <SideNavigation menu="foods" />
           <main>
             <Header title="Foods" subtitle='Manage Kiosk Advertisement' />
-            <div className="p-8">
+            <div className="px-4 pt-4">
               <div className="flex justify-between items-center">
-                <SearchBar />
-                <button className="btn btn-add" onClick={handleAdd}>
+                <div></div>
+                <button className="btn btn-add mb-5 " onClick={handleAdd}>
                   <Plus size={16} />
                   Add New
                 </button>

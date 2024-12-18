@@ -1,31 +1,38 @@
-import { Archive, ArchiveRestore, FilePenLine, Trash2 } from "lucide-react";
 
-import LoadMore from "../LoadMore";
-import Pills from "../partials/Pills";
-import ModalConfirm from "../partials/modals/ModalConfirm";
-import ModalDelete from "../partials/modals/ModalDelete";
-import React from "react";
-import {
-  setIsAdd,
-  setIsArchive,
-  setIsConfirm,
-  setIsDelete,
-  setIsRestore,
-} from "@/componets/store/StoreAction";
-import { StoreContext } from "@/componets/store/StoreContext";
-import { menus } from "../menu-data";
-import useQueryData from "@/componets/custom-hook/useQueryData";
 import Status from "@/componets/partials/Status";
 import ModalArchive from "@/componets/partials/modal/ModalArchive";
 import ModalRestore from "@/componets/partials/modal/ModalRestore";
 import FetchingSpinner from "@/componets/partials/spinner/FetchingSpinner";
+import {
+  setIsAdd,
+  setIsArchive,
+  setIsDelete,
+  setIsRestore
+} from "@/componets/store/StoreAction";
+import { StoreContext } from "@/componets/store/StoreContext";
+import React from "react";
+import LoadMore from "../LoadMore";
 import TableLoader from "../partials/TableLoader";
+import ModalConfirm from "../partials/modals/ModalConfirm";
+import ModalDelete from "../partials/modals/ModalDelete";
+
+import { queryDataInfinite } from "@/componets/helpers/queryDataInfinite";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInView } from "react-intersection-observer";
+import SearchBarWithFilterStatus from "@/componets/partials/SearchBarWithFilterStatus";
+import { FaArchive, FaEdit, FaTrash, FaTrashRestore } from "react-icons/fa";
 import IconNoData from "../partials/IconNoData";
 import IconServerError from "../partials/IconServerError";
 
 const FoodsTable = ({ setItemEdit }) => {
-  const { store, dispatch } = React.useContext(StoreContext);
   const [id, setIsId] = React.useState("");
+  const { store, dispatch } = React.useContext(StoreContext);
+  const [isFilter, setIsFilter] = React.useState(false);
+  const [onSearch, setOnSearch] = React.useState(false);
+  const [statusFilter, setStatusFilter] = React.useState("");
+  const search = React.useRef({ value: "" });
+  const [page, setPage] = React.useState(1);
+  const { ref, inView } = useInView();
   let counter = 1;
 
   const handleDelete = (item) => {
@@ -46,23 +53,74 @@ const FoodsTable = ({ setItemEdit }) => {
     setItemEdit(item);
   };
 
+  // const {
+  //   isLoading,
+  //   isFetching,
+  //   error,
+  //   data: result,
+  //   status,
+  // } = useQueryData(
+  //   `/v2/food`, //enpoint
+  //   "get", //method
+  //   "food" //key
+  // );
+
   const {
-    isLoading,
-    isFetching,
-    error,
     data: result,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
     status,
-  } = useQueryData(
-    `/v2/food`, //enpoint
-    "get", //method
-    "food" //key
-  );
+  } = useInfiniteQuery({
+    queryKey: ["food", onSearch, isFilter, statusFilter],
+    queryFn: async ({ pageParam = 1 }) =>
+      await queryDataInfinite(
+        "/v2/food/search", // search or filter endpoint
+        `/v2/food/page/${pageParam}`, //page api/ endpoint
+        isFilter || store.isSearch, //search boolean
+        {
+          isFilter,
+          statusFilter,
+          searchValue: search?.current.value,
+          id: "",
+        } //payload
+      ),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total) {
+        return lastPage.page + lastPage.count;
+      }
+      return;
+    },
+    refetchOnWindowFocus: false,
+  });
+  React.useEffect(() => {
+    if (inView) {
+      setPage((prev) => prev + 1);
+      fetchNextPage();
+    }
+  }, [inView]);
 
   return (
     <div>
-      {" "}
-      <div className="relative p-4 bg-secondary rounded-md mt-10 border border-line">
-        {isFetching && !isLoading && <FetchingSpinner />}
+      <div>
+        <SearchBarWithFilterStatus
+          search={search}
+          dispatch={dispatch}
+          store={store}
+          result={result}
+          isFetching={isFetching}
+          setOnSearch={setOnSearch}
+          onSearch={onSearch}
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+          setIsFilter={setIsFilter}
+          setPage={setPage}
+        />
+      </div>
+      <div className="relative p-2 bg-secondary rounded-md mt-10 border border-line">
+        {/* {isFetching && !isLoading && <FetchingSpinner />} */}
         <div className="table-wrapper custom-scroll">
           <table>
             <thead>
@@ -77,21 +135,20 @@ const FoodsTable = ({ setItemEdit }) => {
               </tr>
             </thead>
             <tbody>
-              {isLoading && (
+              {/* LOADING OF NO DATA */}
+              {(status === "pending" || result?.pages[0].data.length === 0) && (
                 <tr>
-                  <td colSpan="100%">
-                    <TableLoader count={20} cols={5} />
+                  <td colSpan="100%" className="p-10">
+                    {status === "pending" ? (
+                      <TableLoader cols={2} count={20} />
+                    ) : (
+                      <IconNoData />
+                    )}
                   </td>
                 </tr>
               )}
 
-              {result?.count === 0 && (
-                <tr>
-                  <td colSpan={100}>
-                    <IconNoData />
-                  </td>
-                </tr>
-              )}
+              {/* ERROR */}
               {error && (
                 <tr>
                   <td colSpan={100}>
@@ -100,74 +157,91 @@ const FoodsTable = ({ setItemEdit }) => {
                 </tr>
               )}
 
-              
-              {result?.count > 0 &&
-                result.data.map((item, key) => (
-                  <tr key={key}>
-                    <td>{counter++}.</td>
-                    <td>
-                      {item.food_is_active === 1 ? (
-                        <Status text="Active" />
-                      ) : (
-                        <Status text="Inactive" />
-                      )}
-                    </td>
-                    <td>{item.food_title}</td>
-                    <td>{item.food_price}</td>
-                    <td>{item.category_title}</td>
-                    <td>
-                      <ul className="table-action">
-                        {item.food_is_active ? (
-                          <>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Edit"
-                                onClick={() => handleEdit(item)}
-                              >
-                                <FilePenLine />
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Archive"
-                                onClick={() => handleArchive(item)}
-                              >
-                                <Archive />
-                              </button>
-                            </li>
-                          </>
-                        ) : (
-                          <>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Restore"
-                                onClick={() => handleRestore(item)}
-                              >
-                                <ArchiveRestore />
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Delete"
-                                onClick={() => handleDelete(item)}
-                              >
-                                <Trash2 />
-                              </button>
-                            </li>
-                          </>
-                        )}
-                      </ul>
-                    </td>
-                  </tr>
-                ))}
+              {result?.pages.map((page, pageKey) => (
+                <React.Fragment key={pageKey}>
+                  {page.data.map((item, key) => {
+                    return (
+                      <tr key={key} className="group relative cursor-pointer">
+                        <td>{counter++}.</td>
+                        <td>
+                          {item.food_is_active ? (
+                            <Status text="Active" />
+                          ) : (
+                            <Status text="Inactive" />
+                          )}
+                        </td>
+                        <td>{item.food_title}</td>
+                        <td>{item.food_price}</td>
+                        <td>{item.category_title}</td>
+                        <td
+                          colSpan="100%"
+                          className="opacity-0 group-hover:opacity-100"
+                        >
+                          <div className="flex items-center justify-end gap-2 mr-5">
+                            {item.category_is_active == 1 ? (
+                              <>
+                                <button
+                                  type="button"
+                                  className="tooltip"
+                                  data-tooltip="Edit"
+                                  disabled={isFetching}
+                                  onClick={() => handleEdit(item)}
+                                >
+                                  <FaEdit />
+                                </button>
+                                <button
+                                  type="button"
+                                  className="tooltip"
+                                  data-tooltip="Archive"
+                                  disabled={isFetching}
+                                  onClick={() => handleArchive(item)}
+                                >
+                                  <FaArchive />
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button
+                                  type="button"
+                                  className="tooltip"
+                                  data-tooltip="Restore"
+                                  disabled={isFetching}
+                                  onClick={() => handleRestore(item)}
+                                >
+                                  <FaTrashRestore />
+                                </button>
+                                <button
+                                  type="button"
+                                  className="tooltip"
+                                  data-tooltip="Delete"
+                                  disabled={isFetching}
+                                  onClick={() => handleDelete(item)}
+                                >
+                                  <FaTrash />
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
             </tbody>
           </table>
 
-          <LoadMore />
+          <div className="pb-10 flex items-center justify-center text-white">
+            <LoadMore
+              fetchNextPage={fetchNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+              hasNextPage={hasNextPage}
+              result={result?.pages[0]}
+              setPage={setPage}
+              page={page}
+              refView={ref}
+            />
+          </div>
         </div>
       </div>
       {store.isDelete && (

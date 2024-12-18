@@ -1,4 +1,4 @@
-import Adevertisement from "@/componets/pages/backend/advertisement/Adevertisement"
+import Advertisement from "@/componets/pages/backend/advertisement/Adevertisement"
 import Category from "@/componets/pages/backend/category/Category"
 import Dashboard from "@/componets/pages/backend/dashboard/Dashboard"
 import Foods from "@/componets/pages/backend/foods/Foods"
@@ -15,7 +15,7 @@ export const routeAdmin = [
   },
   {
     route: `/admin/advertisement`,
-    element: <Adevertisement />,
+    element: <Advertisement />,
   },
 
   {

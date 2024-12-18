@@ -1,8 +1,6 @@
 import { Archive, ArchiveRestore, FilePenLine, Trash2 } from "lucide-react";
-
 import Pills from "../partials/Pills";
 import ModalConfirm from "../partials/modals/ModalConfirm";
-
 import React, { useEffect } from "react";
 import {
   setIsAdd,
