@@ -160,68 +160,7 @@ const CategoryTable = ({ setIsCategoryEdit }) => {
                   </td>
                 </tr>
               )}
-              {/* 
-              {result?.count > 0 &&
-                result.data.map((item, key) => (
-                  <tr key={key}>
-                    <td>{counter++}.</td>
-                    <td>
-                      {item.category_is_active === 1 ? (
-                        <Status text="Active" />
-                      ) : (
-                        <Status text="Inactive" />
-                      )}
-                    </td>
-                    <td>{item.category_title}</td>
-                    <td>
-                      <ul className="table-action">
-                        {item.category_is_active === 1 ? (
-                          <>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Edit"
-                                onClick={() => handleEdit(item)}
-                              >
-                                <FilePenLine />
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Archive"
-                                onClick={() => handleArchive(item)}
-                              >
-                                <Archive />
-                              </button>
-                            </li>
-                          </>
-                        ) : (
-                          <>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Restore"
-                                onClick={() => handleRestore(item)}
-                              >
-                                <ArchiveRestore />
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                className="tooltip"
-                                data-tooltip="Delete"
-                                onClick={() => handleDelete(item)}
-                              >
-                                <Trash2 />
-                              </button>
-                            </li>
-                          </>
-                        )}
-                      </ul>
-                    </td>
-                  </tr>
-                ))} */}
+             
               {/* RESULT */}
 
               {result?.pages.map((page, pageKey) => (

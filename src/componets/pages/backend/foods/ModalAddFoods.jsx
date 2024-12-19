@@ -15,7 +15,8 @@ import { queryData } from "@/componets/helpers/queryData";
 
 const ModalAddFoods = ({itemEdit}) => {
   const { dispatch, store } = React.useContext(StoreContext);
-  const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto("");
+ const { uploadPhoto, handleChangePhoto, photo } =
+   useUploadPhoto("/v2/upload-photo");
   const [value, setValue] = React.useState("");
 
   const handleClose = () => {
@@ -175,13 +176,13 @@ const ModalAddFoods = ({itemEdit}) => {
                           <option value="hidden"></option>
                           {categ?.data.map((item, key) => {
                             return (
-                              <>
+                              <React.Fragment key={key}>
                                 {item.category_is_active === 1 && (
-                                  <option value={item.category_aid} key={key}>
+                                  <option value={item.category_aid}>
                                     {item.category_title}
                                   </option>
                                 )}
-                              </>
+                              </React.Fragment>
                             );
                           })}
                         </InputSelect>

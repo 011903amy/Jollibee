@@ -74,6 +74,8 @@ const ModalAddCategory = ({ isCategoryEdit, setIsCategoryEdit, itemEdit }) => {
     category_aid: isCategoryEdit ? isCategoryEdit.category_aid: "",
     category_image: isCategoryEdit ? isCategoryEdit.category_image: "",
     category_title: isCategoryEdit ? isCategoryEdit.category_title: "",
+
+    category_title_old: isCategoryEdit ? isCategoryEdit.category_title: "",
   };
   const yupSchema = Yup.object({
     category_title: Yup.string().required("Required"),

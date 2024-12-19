@@ -19,7 +19,8 @@ const ModalAddAdvertisement = ({
   setIsAdvertisementEdit,
 }) => {
   const { dispatch, store } = React.useContext(StoreContext);
-  const { uploadPhoto, handleChangePhoto, photo } = useUploadPhoto("");
+  const { uploadPhoto, handleChangePhoto, photo } =
+    useUploadPhoto("/v2/upload-photo");
   const [value, setValue] = React.useState("");
   const handleClose = () => {
     dispatch(setIsAdd(false));
@@ -89,6 +90,7 @@ const ModalAddAdvertisement = ({
             initialValues={initVal}
             validationSchema={yupSchema}
             onSubmit={async (values) => {
+              uploadPhoto();
               mutation.mutate({
                 ...values,
                 ads_image:
@@ -99,7 +101,7 @@ const ModalAddAdvertisement = ({
                     ? photo?.name || ""
                     : isAdvertisementEdit?.ads_image || "",
               });
-              uploadPhoto();
+              
             }}
           >
             {(props) => {

@@ -15,6 +15,7 @@ import ToastSuccess from '../partials/ToastSuccess'
 
 const Advertisement = () => {
   const { dispatch, store } = React.useContext(StoreContext);const [isAdvertisementEdit, setIsAdvertisementEdit] = React.useState(null);
+  const [itemEdit, setItemEdit] = React.useState(null);
   const handleAdd = () => {
     dispatch(setIsAdd(true));
     setIsAdvertisementEdit(null)
@@ -56,6 +57,8 @@ const Advertisement = () => {
           setIsAdd={setIsAdd}
           setIsAdvertisementEdit={setIsAdvertisementEdit}
           isAdvertisementEdit={isAdvertisementEdit}
+          itemEdit={itemEdit}
+          setItemEdit={setItemEdit}
         />
       )}
       {store.isValidate && <ModalValidation />}

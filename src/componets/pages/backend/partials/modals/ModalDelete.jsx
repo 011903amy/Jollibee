@@ -5,6 +5,7 @@ import { GrFormClose } from "react-icons/gr";
 import SpinnerButton from "../spinners/SpinnerButton";
 import { StoreContext } from "@/componets/store/StoreContext";
 import { queryData } from "@/componets/helpers/queryData";
+import { setError, setMessage, setSuccess } from "@/componets/store/StoreAction";
 
 const ModalDelete = ({ setIsDelete, mysqlApiDelete, queryKey, item }) => {
   const { store, dispatch } = React.useContext(StoreContext);
