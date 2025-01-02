@@ -72,6 +72,7 @@ const CategoryTable = ({ setIsCategoryEdit }) => {
 
   const {
     data: result,
+    isLoading,
     error,
     fetchNextPage,
     hasNextPage,

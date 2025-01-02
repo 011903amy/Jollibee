@@ -87,7 +87,7 @@ const Dashboard = () => {
                        <Legend />
                        <Bar
                          dataKey="menu_price"
-                         fill="#8884d8"
+                         fill="#EF0107"
                          barSize={80}
                          activeBar={<Rectangle fill="pink" stroke="blue" />}
                        />

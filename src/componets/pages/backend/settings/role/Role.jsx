@@ -25,7 +25,7 @@ const Role = () => {
         <div className="layout-division">
           <SideNavigation menu="Role" />
           <main>
-            <Header title="Settings" subtitle="Welcome To Jollibee" />
+            <Header title="Role" subtitle="Welcome To Jollibee" />
 
             <div className="p-5">
               <div className='flex justify-between items-center'>

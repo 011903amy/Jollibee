@@ -15,6 +15,13 @@ RewriteRule ^category/active/([0-9]+)$ controllers/category/active.php?categoryi
 RewriteRule ^category/page/([0-9]+)$ controllers/category/page.php?start=$1 [L]
 RewriteRule ^category/search$ controllers/category/search.php [L]
 
+### developer ###
+RewriteRule ^developer$ controllers/developer/settings/users/developer/developer.php [L]
+RewriteRule ^developer/([0-9]+)$ controllers/developer/settings/users/developer/developer.php?developerid=$1 [L]
+RewriteRule ^develsoper/active/([0-9]+)$ controllers/developer/settings/user/developer/active.php?developerid=$1 [L]
+RewriteRule ^developer/page/([0-9]+)$ controllers/developer/settings/users/developer/page.phps?start=$1 [L]
+RewriteRule ^developer/search$ controllers/developer/settings/user/developer/search.php [L]
+
 RewriteRule ^role$ controllers/settings/users/role/role.php [L]
 RewriteRule ^role/([0-9]+)$ controllers/settings/users/role/role.php?roleid=$1 [L]
 RewriteRule ^role/active/([0-9]+)$ controllers/settings/users/role/active.php?roleid=$1 [L]
