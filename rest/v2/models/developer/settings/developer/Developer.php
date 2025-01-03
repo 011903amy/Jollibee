@@ -211,7 +211,7 @@ class Developer
       $sql .= "where ";
       $sql .= "dev.user_developer_role_id = role.role_aid ";
       $sql .= "and user_developer_email = :user_developer_email ";
-      $sql .= "and role.role_aid = 1 ";
+      $sql .= "and role.role_is_developer = 1 ";
       $sql .= "and dev.user_developer_is_active = 1 ";
       $query = $this->connection->prepare($sql);
       $query->execute([
@@ -327,9 +327,9 @@ class Developer
     try {
       $sql = "update {$this->tblDeveloper} set ";
       $sql .= "user_developer_password = :user_developer_password, ";
-      $sql .= "user_developer_key = :'' ";
+      $sql .= "user_developer_key = '', ";
       $sql .= "user_developer_datetime = :user_developer_datetime ";
-      $sql .= "where user_developer_key  = :user_developer_key ";
+      $sql .= "where user_developer_key = :user_developer_key ";
       $query = $this->connection->prepare($sql);
       $query->execute([
         "user_developer_password" => $this->user_developer_password, 

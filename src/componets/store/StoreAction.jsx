@@ -115,7 +115,33 @@ export const setError = (val) => {
   };
   };
 
+  export const setIsAccountUpdated = (val) => {
+  return {
+      type: "IS_ACCOUNT_UPDATED",
+      payload: val,
+  };
+  };
 
+  export const setIsLogin = (val) => {
+  return {
+      type: "IS_LOGIN",
+      payload: val,
+  };
+  };
+  
+  export const setIsLogout = (val) => {
+  return {
+      type: "IS_LOGOUT",
+      payload: val,
+  };
+  };
+  
+  export const setCredentials = (val) => {
+  return {
+      type: "CREDENTIALS",
+      payload: val,
+  };
+  };
 
 
 

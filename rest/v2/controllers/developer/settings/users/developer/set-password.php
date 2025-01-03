@@ -3,6 +3,7 @@
 require '../../../../../core/header.php';
 // use needed functions
 require '../../../../../core/functions.php';
+require '../../../../../core/Encryption.php';
 // require 'functions.php';
 // use needed classes
 // require '../../../../models/developer/settings/users/developer/Developer.php';
@@ -15,23 +16,24 @@ $conn = null;
 $conn = checkDbConnection();
 // make instance of classes
 $developer = new Developer($conn);
+$encrypt = new Encryption();
 // get payload
 $body = file_get_contents("php://input");
 $data = json_decode($body, true);
 // get $_GET data
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
-  //checkApiKey();
-  if (array_key_exists("developerid", $_GET)) {
-    // check data
-    checkPayload($data);
-    $developer->user_developer_aid = $_GET['developerid'];
-    $developer->user_developer_is_active = trim($data["isActive"]);
-    checkId($developer->user_developer_aid);
-    $query = checkActive($developer);
+  checkApiKey();
+  checkPayload($data);
+
+    $developer->user_developer_password = $encrypt->doPasswordHash($data['new_password']);
+    $developer->user_developer_key = $data['key'];
+    $developer->user_developer_datetime =date('Y-m-d H:i:s');
+
+    $query = checkSetPassword($developer);
     http_response_code(200);
-    returnSuccess($developer, "developer", $query);
-  }
+    returnSuccess($developer, "user developer set password", $query);
+  
   // return 404 error if endpoint not available
   checkEndpoint();
 }

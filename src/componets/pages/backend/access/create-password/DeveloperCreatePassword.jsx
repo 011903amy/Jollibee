@@ -17,8 +17,9 @@ import SpinnerButton from "../../partials/spinners/SpinnerButton";
 import useQueryData from "@/componets/custom-hook/useQueryData";
 import { StoreContext } from "@/componets/store/StoreContext";
 import { queryData } from "@/componets/helpers/queryData";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
 import { setError, setMessage } from "@/componets/store/StoreAction";
+import FetchingSpinner from "@/componets/partials/spinner/FetchingSpinner";
 
 
 const DeveloperCreatePassword = () => {
@@ -36,6 +37,7 @@ const DeveloperCreatePassword = () => {
   const [numberValidated, setNumberValidated] = React.useState(false);
   const [specialValidated, setSpecialValidated] = React.useState(false);
   const [lengthValidated, setLengthValidated] = React.useState(false);
+  const queryClient = useQueryClient();
 const navigate = useNavigate()
 const paramKey = getUrlParam().get("key")
   const handleChangePasswordInput = (e) => {
@@ -84,29 +86,32 @@ const paramKey = getUrlParam().get("key")
       setShowIconConfirmPassword(true);
     }
   };
-  const {isLoading, data: key} = useQueryData(
-    `v2/developer/key/${paramKey}`,
-    "get",
-    "developer/key"
-  )
 
- const mutation = useMutation({mutationFn: (values) => queryData(`/v2/developer`, "post", values), onSuccess: (data) =>{
+  const { isLoading, data: key } = useQueryData(
+    `/v2/developer/key/${paramKey}`,
+    "get",
+    "developer/key/"
+  );
+
+ const mutation = useMutation({mutationFn: (values) => queryData(`/v2/developer/password`, "post", values), onSuccess: (data) =>{
     queryClient.invalidateQueries({queries:["developer"]});
-    if(!data.succes){
+    if(!data.success){
         dispatch(setError(true));
         dispatch(setMessage(data.error));
     } else {
-        if(store.isCreatePassSucces){
-            dispatch(setCreatePassSucces(false));
-            Navigate(`${devNavUrl}/create-password-success?redirect=/developer/login`);
-        }
+        // if(store.isCreatePassSucces){
+        //     dispatch(setCreatePassSucces(false));
+        //     Navigate(`${devNavUrl}/create-password-success?redirect=/developer/login`);
+        // }
+        setSuccess(true)
     }
   }})
 
-  }
+
   const initVal = {
     new_password: "",
     confirm_password: "",
+    key: paramKey,
   };
   const yupSchema = Yup.object({
     new_password: Yup.string()
@@ -131,6 +136,7 @@ const paramKey = getUrlParam().get("key")
 
     setThemeColor();
   }, [theme]);
+
   return (
     <main className="h-screen bg-primary center-all">
       <div className="login-main bg-secondary max-w-[320px] w-full p-4 border border-line rounded-md">
@@ -153,12 +159,17 @@ const paramKey = getUrlParam().get("key")
               Back to Login
             </Link>
           </div>
+        ) : isLoading? (
+          <FetchingSpinner/>
+        ) : key?.count === 0 || paramKey === null || paramKey === "" ? ( 
+          "Invalid Page"
         ) : (
           <Formik
             initialValues={initVal}
             validationSchema={yupSchema}
             onSubmit={async (values) => {
               console.log(values);
+              mutation.mutate(values);
             }}
           >
             {(props) => {
@@ -284,11 +295,14 @@ const paramKey = getUrlParam().get("key")
 
                   <button
                     className="btn btn-accent w-full center-all mt-5"
-                    onClick={() => setSuccess(true)}
+                    // onClick={() => setSuccess(true)}
+                    disabled={mutation.isPending || props.values.new_password === '' || 
+                    props.values.confirm_password === ""}
                     type="submit"
                   >
-                    <SpinnerButton />
-                    Set Password
+                    {mutation.isPending ? <SpinnerButton /> : "Set Password"}
+                    
+                    
                   </button>
                 </Form>
               );

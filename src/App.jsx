@@ -17,6 +17,7 @@ import Role from './componets/pages/backend/settings/role/Role'
 import { routeAdmin } from './routes/routesAdmin'
 import { routeDeveloper } from './routes/RoutesDeveloper'
 import DeveloperCreatePassword from './componets/pages/backend/access/create-password/DeveloperCreatePassword'
+import DeveloperLogin from './componets/pages/backend/access/create-password/DeveloperLogin'
 const App = () => {
   const queryClient = new QueryClient();
   return (
@@ -42,6 +43,8 @@ const App = () => {
         })}
       
 
+
+        <Route path='/developer/login' element={<DeveloperLogin/>}/>
 
         <Route path='/admin/login' element={<LogIn/>}/>
         <Route path='/admin/set-password' element={<SetPassword/>}/>

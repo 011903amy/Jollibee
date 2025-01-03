@@ -217,7 +217,7 @@ function loginAccess(
 }
 
 // Token
-function token(
+function tokenDeveloper(
     $object,
     $token,
     $key
@@ -229,8 +229,7 @@ function token(
     if (!empty($token)) {
         try {
             $decoded = JWT::decode($token, $key, array('HS256'));
-            ($object->user_system_email = $decoded->data->email
-                or $object->user_other_email = $decoded->data->email);
+            ($object->user_developer_email = $decoded->data->email);
             $result = checkLogin($object);
             $row = $result->fetch(PDO::FETCH_ASSOC);
 

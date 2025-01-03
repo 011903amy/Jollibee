@@ -23,7 +23,7 @@ import { queryDataInfinite } from "@/componets/helpers/queryDataInfinite";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import SearchBarWithFilterStatus from "@/componets/partials/SearchBarWithFilterStatus";
 import Pills from "../../partials/Pills";
-import { FaArchive, FaTrash, FaTrashRestore } from "react-icons/fa";
+import { FaArchive, FaEdit, FaTrash, FaTrashRestore } from "react-icons/fa";
 
 const DeveloperList = ({ setItemEdit }) => {
    const [id, setIsId] = React.useState("");
@@ -168,13 +168,16 @@ const DeveloperList = ({ setItemEdit }) => {
                         <tr key={key} className="group relative cursor-pointer">
                           <td className="text-center">{counter++}</td>
                           <td>
-                            {item.user_developer_is_active ? (
-                              <Pills text={"Active"} />
+                            {item.user_developer_is_active === 1 ? (
+                              <Status text={"Active"} />
                             ) : (
-                              <Pills text={"Inactive"} />
+                              <Status text={"Inactive"} />
                             )}
                           </td>
-                          <td>{item.user_developer_first_name}</td>
+                          <td>
+                            {item.user_developer_first_name}{" "}
+                            {item.user_developer_last_name}
+                          </td>
                           <td>{item.user_developer_email}</td>
                           <td
                             colSpan="100%"

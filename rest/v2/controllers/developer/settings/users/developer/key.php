@@ -22,14 +22,13 @@ $data = json_decode($body, true);
 // validate api key
 if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
   //checkApiKey();
-  if (array_key_exists("developerid", $_GET)) {
+  if (array_key_exists("developerkey", $_GET)) {
     // check data
-    checkPayload($data);
-    $developer->user_developer_aid = $_GET['developerid'];
-    $developer->user_developer_is_active = trim($data["isActive"]);
-    checkId($developer->user_developer_aid);
-    $query = checkActive($developer);
+    $developer->user_developer_key = $_GET['developerkey'];
+
+    $query = checkReadKey($developer);
     http_response_code(200);
+    getQueriedData($query);
     returnSuccess($developer, "developer", $query);
   }
   // return 404 error if endpoint not available

@@ -23,11 +23,13 @@ const LogIn = () => {
 
 
   const initVal = {
-    user_email: "",
+    user_developer_email: "",
     password: "",
   };
   const yupSchema = Yup.object({
-    user_email: Yup.string().required("Required").email("Invalid email"),
+    user_developer_email: Yup.string()
+      .required("Required")
+      .email("Invalid email"),
     password: Yup.string().required("Required"),
   });
 
@@ -49,36 +51,50 @@ const LogIn = () => {
             {(props) => {
               return (
                 <Form>
-              <div className="input-wrap">
-                <InputText 
-                label="Email"
-                type="email"
-                className='!py-2'
-                name="user_email"
-                />
+                  <div className="input-wrap">
+                    <InputText
+                      label="Email"
+                      type="email"
+                      className="!py-2"
+                      name="user_developer_email"
+                    />
+                  </div>
+                  <div className="input-wrap">
+                    <InputText
+                      label="Password"
+                      type={showPassword ? "text" : "password"}
+                      className="!py-2"
+                      name="password"
+                    />
+                    <button
+                      className="absolute bottom-2.5 right-2"
+                      onClick={() => setShowPassword(!showPassword)}
+                      type="button"
+                    >
+                      {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                    </button>
+                  </div>
+                  <p className="text-right">
+                    <Link
+                      to="/admin/forgot-password"
+                      className="text-xs italic hover:text-accent"
+                    >
+                      Forgot Password
+                    </Link>
+                  </p>
 
-              </div>
-              <div className="input-wrap">
-                <InputText 
-                label="Password"
-                type={showPassword ? "text" : "password"}
-                className='!py-2'
-                name="password"
-                />
-                <button className='absolute bottom-2.5 right-2' onClick={() => setShowPassword(!showPassword)} type='button'>
-                  
-                  {showPassword ? <Eye  size={18}/> :<EyeOff size={18}/>}
-                  
+                  <button className="btn btn-accent w-full center-all mt-5">
+                    LogIn
                   </button>
-              </div>
-              <p className='text-right'>
-                <Link to="/admin/forgot-password" className='text-xs italic hover:text-accent'>Forgot Password</Link>
-              </p>
-              
-              <button className='btn btn-accent w-full center-all mt-5'>LogIn</button>
 
-              <Link to="/" className='text-sm text-center block mt-5 hover:text-accent flex center-all gap-1'><ArrowLeft/>Go Back To Kiosk</Link>
-              </Form>
+                  <Link
+                    to="/"
+                    className="text-sm text-center block mt-5 hover:text-accent flex center-all gap-1"
+                  >
+                    <ArrowLeft />
+                    Go Back To Kiosk
+                  </Link>
+                </Form>
               );
             }}
           </Formik>
