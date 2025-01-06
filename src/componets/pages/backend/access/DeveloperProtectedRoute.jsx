@@ -33,7 +33,7 @@ const DeveloperProtectedRoute = ({ children }) => {
 
         delete login.data.user_developer_password;
         delete login.data.user_developer_key;
-        delete login.data.role_decription;
+        delete login.data.role_description;
         delete login.data.role_created;
         delete login.data.role_datetime;
       }
@@ -45,7 +45,7 @@ const DeveloperProtectedRoute = ({ children }) => {
       }
     };
     if (jollibeetoken !== null) {
-      fetchLogin;
+      fetchLogin();
     } else {
       setIsAuth("456");
       setLoading(false);
